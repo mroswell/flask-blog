@@ -66,6 +66,13 @@ def edit_post_get(id):
     return render_template("edit_post.html",  post_title = post.title,   post_content = post.content )
 
 
+@app.route("/post/<int:id>/delete")
+def delete_post_get(id):
+    post = session.query(Post).get(id)
+    session.delete(post)
+    session.commit()
+    return redirect(url_for("posts"))
+
 @app.route("/post/<int:id>/edit", methods=["POST"])
 def edit_post_post(id):
 
