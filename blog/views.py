@@ -47,6 +47,40 @@ def posts(page=1, paginate_by=10):
     )
 
 
+
+@app.route("/post/<int:id>")
+def post(id):
+    post = session.query(Post).get(id)
+    # posts = posts.order_by(Post.datetime.desc())
+    # post = posts[post_id]
+
+    return render_template("post.html",
+        post=post
+    )
+
+
+@app.route("/post/<int:id>/edit")
+def edit_post_get(id):
+    post = session.query(Post).get(id)
+
+    return render_template("edit_post.html",  post_title = post.title,   post_content = post.content )
+
+
+@app.route("/post/<int:id>/edit", methods=["POST"])
+def edit_post_post(id):
+
+    post = session.query(Post).get(id)
+
+#    post1 = Post(
+    post.title=request.form["title"],
+    post.content=mistune.markdown(request.form["content"]),
+#    )
+#    session.add(post1)
+    session.commit()
+    return redirect(url_for("posts"))
+
+
+
 @app.route("/post/add", methods=["GET"])
 def add_post_get():
     return render_template("add_post.html")
