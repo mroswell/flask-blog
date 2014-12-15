@@ -14,6 +14,10 @@
         <label for="content">Content</label>
         <textarea class="form-control" id="content" name="content" placeholder="Post content" rows="20" required>{{ post_content}}</textarea>
     </div>
+    <div class="content-preview">
+        {{ post_content | safe }}
+    </div>
+
     <button type="submit" class="btn btn-default">Submit</button>
 </form>
 {% endblock %}

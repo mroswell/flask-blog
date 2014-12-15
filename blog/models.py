@@ -4,7 +4,7 @@ from sqlalchemy import Column, Integer, String, Sequence, Text, DateTime
 
 from database import Base, engine
 
-from flask.ext.login import UserMixin
+from flask.ext.login import UserMixin #class from which user class inherits
 
 class Post(Base):
     __tablename__ = "posts"
@@ -22,4 +22,5 @@ class User(Base, UserMixin):
     name = Column(String(128))
     email = Column(String(128), unique=True)
     password = Column(String(128))
+
 Base.metadata.create_all(engine)
