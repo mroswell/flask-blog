@@ -36,7 +36,7 @@
                 {% block navbar_right %}
                     <ul class="nav navbar-nav navbar-right">
           <!-- http://www.shea.io/lightweight-python-apps-with-flask-twitter-bootstrap-and-heroku/ 00 ul class="nav navbar-nav pull-right"-->
-            {% if not user.is_authenticated() %}
+            {% if not current_user.is_authenticated() %}
               <li><a href="/login">Login</a></li>
             {% else %}
               <li><a href="/post/add">Add Post</a></li>

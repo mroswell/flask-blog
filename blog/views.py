@@ -10,10 +10,11 @@ from flask import request, redirect, url_for
 
 
 from flask import flash
-from flask.ext.login import login_user, logout_user, current_user, login_required # methods and a decorator
+from flask.ext.login import login_user, logout_user, login_required # methods and a decorator
 from werkzeug.security import check_password_hash
 from models import User
 
+app.jinja_env.filters.setdefault('markdown', mistune.markdown)
 
 @app.route("/login", methods=["POST"])
 def login_post():
@@ -28,7 +29,7 @@ def login_post():
 
 @app.route("/login", methods=["GET"])
 def login_get():
-    return render_template("login.html", user=current_user)
+    return render_template("login.html")
 
 @app.route('/logout')
 @login_required
@@ -74,7 +75,6 @@ def posts(page=1, paginate_by=10):
         has_prev=has_prev,
         page=page,
         total_pages=total_pages,
-        user=current_user
     )
 
 
@@ -88,8 +88,6 @@ def post(id):
 
     return render_template("post.html",
         post=post,
-        user=current_user
-
     )
 
 
@@ -99,7 +97,9 @@ def edit_post_get(id):
     post = session.query(Post).get(id)
 #    post.content=mistune.markdown(request.form["content"])
 
-    return render_template("edit_post.html",  post_title = post.title,   post_content = post.content,         user=current_user
+    return render_template("edit_post.html",
+        post_title = post.title,
+        post_content = post.content,
  )
 
 
@@ -132,7 +132,7 @@ def edit_post_post(id):
 @app.route("/post/add", methods=["GET"])
 @login_required
 def add_post_get():
-    return render_template("add_post.html",         user=current_user)
+    return render_template("add_post.html")
 
 
 @app.route("/post/add", methods=["POST"])

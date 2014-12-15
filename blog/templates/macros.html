@@ -16,7 +16,7 @@
    {{ post.title }}
             </a>
         </h1>
-        {{ post.content | safe }}
+        {{ post.content | markdown | safe }}
     </div>
 </div>
 {% endmacro %}
