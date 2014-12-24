@@ -11,6 +11,8 @@ from flask import request, redirect, url_for
 
 from flask import flash
 from flask.ext.login import login_user, logout_user, login_required # methods and a decorator
+from flask.ext.login import current_user
+
 from werkzeug.security import check_password_hash
 from models import User
 
@@ -141,6 +143,7 @@ def add_post_post():
     post = Post(
         title=request.form["title"],
         content=request.form["content"],
+        author=current_user,
         )
     session.add(post)
     session.commit()
